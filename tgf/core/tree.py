@@ -10,6 +10,7 @@ class Node(object):
         root=None,
         attributes=None,
         children=None,
+        node_type="",
         **kwargs
     ):
         """
@@ -17,11 +18,13 @@ class Node(object):
         :param root: Optional reference to the root node.
         :param attributes: Optional argument accepting an initial dictionary of attributes. Will call `add_attributes`.
         :param child_nodes:  Optional argument accepting an initial list of child nodes. Will call `add_childs`.
+        :param node_type: Optional argument accepting the type of the Node.
         :param kwargs: Some kwargs that we send to the attributes object.
         """
         self.attributes = {}
         self.child_nodes = []
         self.root = root
+        self.node_type = node_type
 
         if attributes is not None and isinstance(attributes, dict):
             self.add_attributes(attributes)
@@ -126,7 +129,7 @@ class Tree(object):
         :param root: A root-node to add.
         :return: Void
         """
-            assert isinstance(root, Node)
+        assert isinstance(root, Node)
         self.roots.append(root)
 
     def add_roots(self, roots):

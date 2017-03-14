@@ -14,6 +14,7 @@ def test_init_node():
 
     assert node.attributes == {}
     assert node.child_nodes == []
+    assert node.node_type == ""
     assert node.root is None
 
 
@@ -23,7 +24,7 @@ def test_init_node_with_defaults():
 
     attributes = {'key': 'val'}
     node = Node(
-        root = root,
+        root=root,
         attributes=attributes,
         children=[child]
     )
@@ -39,7 +40,6 @@ def test_node_add_attribute():
     node.add_attribute('key', 'val')
     assert 'key' in node.attributes
     assert node.attributes['key'] == 'val'
-    pass
 
 
 def test_node_add_attributes():
