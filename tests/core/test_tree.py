@@ -6,7 +6,7 @@ from tgf.core.tree import Tree, Node
 def test_init_tree():
     tree = Tree()
 
-    assert tree.root is None
+    assert tree.roots == []
 
 
 def test_init_node():

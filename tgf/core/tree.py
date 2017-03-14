@@ -100,18 +100,42 @@ class Tree(object):
     """
     Class representing a TGF-tree.
 
-    The class simply wraps a root-node.
+    The class simply wraps one or more roots.
     """
     def __init__(
         self,
-        root=None
+        roots=None
     ):
         """
         Constructor.
         :param root: Optional root node.
         """
-        if root is not None:
+        self.roots = []
+
+        if roots is not None:
+            if hasattr(roots, '__iter__'):
+                for root in roots:
+                    self.add_root(root)
+            else:
+                self.add_root(roots)
+
+    def add_root(self, root):
+        """
+        Adds a root to the tree.
+
+        :param root: A root-node to add.
+        :return: Void
+        """
             assert isinstance(root, Node)
+        self.roots.append(root)
 
-        self.root = root
+    def add_roots(self, roots):
+        """
+        Adds multiple roots.
 
+        :param roots: Root-nodes.
+        :return:
+        """
+        assert hasattr(roots, '__iter__')
+        for root in roots:
+            self.add_root(root)
