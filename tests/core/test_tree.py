@@ -130,3 +130,17 @@ def test_node_add_children_bad_input():
 
     with pytest.raises(Exception):
         node.add_children([child1, child2])
+
+
+def test_node_getitem():
+    node = Node()
+    node.add_attribute('key', 'value')
+    assert node['key'] == 'value'
+
+
+def test_node_setitem():
+    node = Node()
+    node['key'] = 'value'
+
+    assert 'key' in node.attributes
+    assert node.attributes['key'] == 'value'

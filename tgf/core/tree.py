@@ -98,6 +98,25 @@ class Node(object):
 
         self.child_nodes.remove(child)
 
+    def __getitem__(self, item):
+        """
+        Enables getting attribute values in a dictionary-like fashion
+
+        :param item: The key to fetch
+        :return:
+        """
+        return self.attributes[item]
+
+    def __setitem__(self, key, value):
+        """
+        Enables setting attribute values in a dictionary-like fashion
+
+        :param key: The key to set
+        :param value: The value to set
+        :return:
+        """
+        self.attributes[key] = value
+
 
 class Tree(object):
     """
