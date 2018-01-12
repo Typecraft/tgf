@@ -98,6 +98,20 @@ class Node(object):
 
         self.child_nodes.remove(child)
 
+    def to_dict(self):
+        """
+        Converts the node to a python dict.
+
+        :return: dict
+        """
+        res_dict = {k: v for k, v in self.attributes.items()}
+        res_dict['children'] = []
+
+        for child in self.child_nodes:
+            res_dict['children'].append(child.to_dict())
+
+        return res_dict
+
     def __getitem__(self, item):
         """
         Enables getting attribute values in a dictionary-like fashion
@@ -161,3 +175,12 @@ class Tree(object):
         assert hasattr(roots, '__iter__')
         for root in roots:
             self.add_root(root)
+
+    def to_dict(self):
+        """
+        Converts a tree to a python dict.
+        :return: A python dict
+        """
+        return {
+            'roots': [root.to_dict() for root in self.roots]
+        }

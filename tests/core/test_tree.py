@@ -144,3 +144,50 @@ def test_node_setitem():
 
     assert 'key' in node.attributes
     assert node.attributes['key'] == 'value'
+
+
+def test_node_to_dict_simple():
+    node = Node()
+    node.add_attributes({'key1': 'val', 'key2': 'val2'})
+
+    dict_repr = node.to_dict()
+    assert isinstance(dict_repr, dict)
+    assert dict_repr['key1'] == 'val'
+    assert dict_repr['key2'] == 'val2'
+
+
+def test_node_with_children_to_dict():
+    node = Node()
+    node_2 = Node()
+
+    node.add_attributes({'key1': 'val'})
+    node_2.add_attributes({'key2': 'val2', 'key3': 'val3'})
+    node.add_child(node_2)
+
+    dict_repr = node.to_dict()
+    assert isinstance(dict_repr, dict)
+    assert 'children' in dict_repr
+    assert dict_repr['children'][0]['key2'] == 'val2'
+    assert dict_repr['children'][0]['key3'] == 'val3'
+
+
+def test_tree_to_dict():
+    node = Node()
+    node.add_attribute('key', 'val')
+
+    node_2 = Node()
+    node_2.add_attribute('key2', 'val2')
+    node.add_child(node_2)
+
+    tree = Tree()
+    tree.add_root(node)
+
+    dict_repr = tree.to_dict()
+    assert 'roots' in dict_repr
+    roots = dict_repr['roots']
+
+    assert len(roots) == 1
+
+    assert 'key' in roots[0]
+    assert 'children' in roots[0]
+    assert 'key2' in roots[0]['children'][0]
