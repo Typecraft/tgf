@@ -1,3 +1,4 @@
+import json
 import xml.etree.ElementTree as ET
 from io import BytesIO
 
@@ -13,7 +14,7 @@ def _parse_node_attributes(node_etree):
     """
     attributes = {}
 
-    for attribute in node_etree.iter('attribute'):
+    for attribute in node_etree.findall('attribute'):
         key = attribute.attrib['name']
         value = attribute.text
 
@@ -48,7 +49,7 @@ def _parse_tgf(tgf_etree):
 
     parsed_tree = Tree()
 
-    for node_etree in tree.iter('node'):
+    for node_etree in tree.findall('node'):
         parsed_node = _parse_node(node_etree)
         parsed_tree.add_root(parsed_node)
 
@@ -145,3 +146,27 @@ def serialize_to_file(tree, filename_or_fp):
     """
     serialized = _serialize_tree(tree)
     serialized.write(filename_or_fp, encoding="UTF-8", xml_declaration=True)
+
+
+def serialize_json_to_string(tree):
+    """
+    Serializes a Tree object into a json-representation of the tree.
+
+    :param tree: A tree Object
+    :type tree: Tree
+    :return: A string with the serialized tree
+    """
+    return json.dumps(tree.to_dict())
+
+
+def serialize_json_to_file(tree, filename_or_fp):
+    """
+    Serializes a Tree object into a json-representation of the tree, and saves it
+    to a file.
+
+    :param tree: A tree Object
+    :type tree: Tree
+    :param filename_or_fp: Either a file object, or a path to a file.
+    :return: void
+    """
+    json.dump(filename_or_fp, tree)
