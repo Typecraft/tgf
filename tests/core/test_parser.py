@@ -1,4 +1,8 @@
-from tgf.core.parser import parse_string, serialize_to_string
+import json
+
+import six
+
+from tgf.core.parser import parse_string, serialize_to_string, serialize_json_to_string
 from tgf.core.tree import Tree, Node
 
 xml_1 = """
@@ -46,6 +50,7 @@ def test_serialize_to_string():
     tree = parse_string(xml_1)
 
     serialized = serialize_to_string(tree)
+    print(serialized)
     assert "<?xml version='1.0' encoding='UTF-8'?>" in serialized
     assert "<tgf version=\"1.0\">" in serialized
     assert "<tree>" in serialized
@@ -53,4 +58,24 @@ def test_serialize_to_string():
     assert "<node type=\"Phrase\">" in serialized
     assert "<attribute name=\"title\">Some title</attribute>" in serialized
     assert "<attribute name=\"phrase\">Dette er en frase</attribute>" in serialized
+
+
+def test_serialize_json_to_string():
+    tree = parse_string(xml_1)
+    serialized = serialize_json_to_string(tree)
+    print(serialized)
+
+    assert isinstance(serialized, six.string_types)
+    assert "\"roots\"" in serialized
+    assert "phrase" in serialized
+    assert "titleTranslation" in serialized
+    assert "children" in serialized
+
+
+def test_serialize_json_to_string_and_reverse_produces_identical_results():
+    tree = parse_string(xml_1)
+    new_tree = json.loads((serialize_json_to_string(tree)))
+
+    assert tree.to_dict() == new_tree
+
 

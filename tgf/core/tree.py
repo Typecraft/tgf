@@ -73,7 +73,7 @@ class Node(object):
         :return: Void
         """
         if not hasattr(children, '__iter__'):
-            raise Exception('Invalid argument to add_children. Expect something iterable.')
+            raise Exception('Invalid argument to add_children. Expected something iterable.')
 
         for child in children:
             self.add_child(child)
