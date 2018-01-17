@@ -50,8 +50,7 @@ def test_serialize_to_string():
     tree = parse_string(xml_1)
 
     serialized = serialize_to_string(tree)
-    print(serialized)
-    assert "<?xml version='1.0' encoding='UTF-8'?>" in serialized
+    assert "<?xml version='1.0' encoding='UTF-8'?>" in str(serialized)
     assert "<tgf version=\"1.0\">" in serialized
     assert "<tree>" in serialized
     assert "<node type=\"Text\">" in serialized
@@ -63,7 +62,6 @@ def test_serialize_to_string():
 def test_serialize_json_to_string():
     tree = parse_string(xml_1)
     serialized = serialize_json_to_string(tree)
-    print(serialized)
 
     assert isinstance(serialized, six.string_types)
     assert "\"roots\"" in serialized

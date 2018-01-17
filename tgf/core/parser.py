@@ -95,7 +95,7 @@ def _serialize_node(parent_etree, node):
     """
     Serializes a Node object into an ElementTree representation.
 
-    :param parent: The etree-parent element to nest this node under.
+    :param parent_etree: The etree-parent element to nest this node under.
     :param node: The Node object to serialize.
     :return: void, all additions are done in-place.
     """
@@ -132,7 +132,7 @@ def serialize_to_string(tree):
     serialized = _serialize_tree(tree)
     f = BytesIO()
     serialized.write(f, encoding="UTF-8", xml_declaration=True)
-    return f.getvalue()
+    return f.getvalue().decode("utf-8")  # Final decoding makes sure we return unicode
 
 
 def serialize_to_file(tree, filename_or_fp):
