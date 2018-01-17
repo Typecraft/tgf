@@ -86,7 +86,7 @@ def _serialize_node_attributes(node_etree, node):
     :param node:
     :return:
     """
-    for k, v in node.attributes.iteritems():
+    for k, v in node.attributes.items():
         attribute_etree = ET.SubElement(node_etree, 'attribute', name=k)
         attribute_etree.text = v
 
