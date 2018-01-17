@@ -49,14 +49,16 @@ def test_parser_returns_nested_nodes():
 def test_serialize_to_string():
     tree = parse_string(xml_1)
 
-    serialized = serialize_to_string(tree)
-    assert "<?xml version='1.0' encoding='UTF-8'?>" in str(serialized)
+    # We use lower here, as there are some case inconsistencies across
+    # python versions
+    serialized = serialize_to_string(tree).lower()
+    assert "<?xml version='1.0' encoding='utf-8'?>".lower() in serialized
     assert "<tgf version=\"1.0\">" in serialized
     assert "<tree>" in serialized
-    assert "<node type=\"Text\">" in serialized
-    assert "<node type=\"Phrase\">" in serialized
-    assert "<attribute name=\"title\">Some title</attribute>" in serialized
-    assert "<attribute name=\"phrase\">Dette er en frase</attribute>" in serialized
+    assert "<node type=\"text\">" in serialized
+    assert "<node type=\"phrase\">" in serialized
+    assert "<attribute name=\"title\">some title</attribute>" in serialized
+    assert "<attribute name=\"phrase\">dette er en frase</attribute>" in serialized
 
 
 def test_serialize_json_to_string():
